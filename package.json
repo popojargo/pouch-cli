@@ -1,0 +1,49 @@
+{
+  "name": "pouch-cli",
+  "version": "0.0.1",
+  "description": "A Node.js CLI powered by PouchDB that let you do basic commands on your CouchDB,Cloudant and PouchDB databases.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "pouch-cli": "./bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/popojargo/pouch-cli.git"
+  },
+  "keywords": [
+    "pouchdb",
+    "dump",
+    "json",
+    "select",
+    "views",
+    "cli",
+    "pouch"
+  ],
+  "author": "Alexis Côté",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/popojargo/pouch-cli/issues"
+  },
+  "homepage": "https://github.com/popojargo/pouch-cli#readme",
+  "dependencies": {
+    "async-process": "0.0.1",
+    "clone": "^2.0.0",
+    "deep-equal": "^1.0.1",
+    "lie": "^3.1.0",
+    "merge": "^1.2.0",
+    "pouchdb": "^6.0.6",
+    "url": "^0.11.0",
+    "vargs": "^0.1.0",
+    "yargs": "^6.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jsdoc": "^3.4.2",
+    "mocha": "^3.1.0",
+    "standard": "^8.4.0",
+    "vorpal": "^1.11.4"
+  }
+}
