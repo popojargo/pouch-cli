@@ -2,65 +2,72 @@
 Inspired from [pouchdb-dump-cli](https://www.npmjs.com/package/pouchdb-dump-cli). This module let you perform basic operations on Cloudant/CouchDB/PouchDB databases. The main mission of this module is to give quick commands to daily operations on your database. You can access it via the CLI or directly using the library. *Note that importing this package into your code only gives you an easy access to query your PouchDB instance.*
 
 #Installation
-To install this package, simply run this command : `npm i pouchdb-cli`. 
-If you plan to use the CLI, I suggest that you install it globally like this : `npm i  -g pouchdb-cli`.
+To install this package, simply run this command : `npm i pouch-cli`.
+If you plan to use the CLI, I suggest that you install it globally like this : `npm i  -g pouch-cli`.
 
 
 #CLI
 
-Once installed, you can use this command to access the CLI : `pouchdb-cli`.
+Once installed, you can use this command to access the CLI : `pouch-cli`.
 
-Full parameters bellow :
+#Commands
 
+For every commands you use, they are some global options that you need or can set.
+
+| Option |   Alias   | Type | Default | Required | Description |
+| ------ |   -----   | ---- | ------- | -------- | ----------- |
+| -d | --db | string | | Yes | The url of the database on which you want to execute your commands. |
+| -u | -&nbsp;-&nbsp;username | string | No | | The username for access to the database (if securized) |
+| -p | -&nbsp;-&nbsp;password | string | No | | Option to set the password to use during the query. |
+
+
+##Documents commands
+
+###Select
+
+To access the select commands, simply run : `pouch-cli select --help`.
+
+At this level, you still have other global options. 
+
+| Option |   Alias   | Type | Default |  Description |
+| ------ |   -----   | ---- | ------- | ----------- |
+| -k | --keys | Array|string | | Can be either an array of keys to fetch or a single key to fetch. |
+| -r | --rev | boolean | true | Determine if the documents must be returned with their revision. | 
+| -e | --with-error | boolean | false | Determine if the document with errors should be returned. | 
+| -o | --output-file | string | | The path there the response should be saved.
+
+From this point, you have three possible subcommands to use.
+
+####normal
+The normal select let you query the database and select particulars documents base on their ids.
+
+For example, if we want to get the document with the _id *test_doc*, we would do the following : 
+
+```bash
+pouch-cli select normal -k test_doc -d "http://localhost:5984/db"
 ```
-Options:
-  -h, --help         Help message  [boolean]
-  -v, --view         The view name including the design doc prefix
-  --vk, --viewkey    The view key on wich the documents will be indexed.
-  -k, --key          The key(s) to fetch
-  --dd, --designdoc  Determine if a design doc will be created if querying views.
-  -o, --output-file  output file (else will dump to stdout)
-  -u, --username     username for the CouchDB database (if it's protected)
-  -p, --password     password for the CouchDB database (if it's protected)
-  -s, --split        split into multiple files, for every n docs
 
-Examples:
-  C:\Users\user\AppData\Roaming\npm\node_modules\pouchdb-dump-select\bin.js http://localhost:5984/mydb > dump.txt                           Dump from the "mydb" CouchDB to dump.txt
-  C:\Users\user\AppData\Roaming\npm\node_modules\pouchdb-dump-select\bin.js /path/to/mydb > dump.txt                                        Dump from the "mydb" LevelDB-based PouchDB to dump.txt
-  C:\Users\user\AppData\Roaming\npm\node_modules\pouchdb-dump-select\bin.js /path/to/mydb -o dump.txt                                       Dump to the specified file instead of stdout
-  C:\Users\user\AppData\Roaming\npm\node_modules\pouchdb-dump-select\bin.js http://example.com/mydb -u myUsername -p myPassword > dump.txt  Specify a CouchDB username and password if it's protected
+You can also fetch multiple keys :  
 
+```bash
+pouch-cli select normal -k ["test_doc","test_doc2"] -d "http://localhost:5984/db"
 ```
 
+---
+
+####viewname
 
 
-#Library
 
-The actual library is a constructor with 3 public methods. 
+---
 
-You can access the full documentation [here](https://popojargo.github.io/pouchdb-dump-select/docs/index.html).
-
-So first of all, you  need to require the library :
-```
-var PDS = require("pouchdb-dump-select");
-```
-
+####dynamic
 
 
 
 
 #Note
 This package is **not stable yet**, so don't put it in a production environment. CLI parameters and functions might change. I will try to write a changelog if it happens.
-
-
-
-#TODO :
-- Complete README doc.
-- Add unit test on the main code
-- Add tests on the CLI.
-- Add some format parameter so this tool is compatible with PouchDB-load
-- Reimplement the split file save
-
 
 ##Want to contribute?
 
@@ -70,6 +77,8 @@ Any new feature can be discussed so it gets well implemented in the current modu
 
 ##Contact
 
-You can contact me via gitter : [] or by email at alexiscote19@hotmail.com.
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/popojargo/pouch-cli)
+
+You can contact me via email at [alexiscote19@hotmail.com](mailto:alexiscote19@hotmail.com?subject=Feedback).
 
 
