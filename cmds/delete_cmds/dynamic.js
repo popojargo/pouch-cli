@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
-exports.command = 'dynamic <indexkey> [optoins]';
+exports.command = 'dynamic <indexkey> [keys]';
 exports.desc = 'Deletes the documents from a indexkey and matching values(keys).';
 exports.builder = {
     indexkey: {
@@ -25,10 +25,6 @@ exports.builder = {
         alias: 'useDesignDoc',
         default:true,
         describe: 'Determine if a design doc will be used for the request or if it will be temporary.'
-    }, keys: {
-        array: true,
-        describe: 'The keys matching the index key that need to be deleted',
-        default: []
     }
 };
 exports.handler = function (argv) {
@@ -47,12 +43,9 @@ exports.handler = function (argv) {
         rows = cmds.cleanRows(rows);
         return cmds.delete(rows);
     }).then(function (result) {
-        if (result && result.success)
-            console.log("Successfully deleted");
-        else
-            console.log("An error occured");
+       console.log("Successfully deleted");
     }).catch(function (err) {
-        console.error(err);
+        console.error(JSON.stringify(err));
         return process.exit(1);
     });
 };

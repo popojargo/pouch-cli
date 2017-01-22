@@ -1,5 +1,7 @@
 #pouch-cli
-Inspired from [pouchdb-dump-cli](https://www.npmjs.com/package/pouchdb-dump-cli). This module let you perform basic operations on Cloudant/CouchDB/PouchDB databases. The main mission of this module is to give quick commands to daily operations on your database. You can access it via the CLI or directly using the library.
+Inspired from [pouchdb-dump-cli](https://www.npmjs.com/package/pouchdb-dump-cli). This module let you perform basic operations on Cloudant/CouchDB/PouchDB databases. The main mission of this module is to give quick commands to daily operations on your database. You can access it via the CLI or directly using the library. 
+
+This is currently under development so use it at your own risks.  
 
 #Table of content
 
@@ -8,10 +10,14 @@ Inspired from [pouchdb-dump-cli](https://www.npmjs.com/package/pouchdb-dump-cli)
 - [Changelog](#changelog)
 - [Commands](#commands)
     + [Document's commands](#documents-commands)
-        * [select \<sub_command\>](#select-sub_command)
-            - [normal](#normal)
-            - [view \<design/view_name\>](#view-designview_name)
-            - [dynamic \<indexkey\>](#dynamic-indexkey)
+        * [select \<command\>](#select-command)
+            - [select normal](#select-normal)
+            - [select view \<design/view_name\>](#select-view-designview_name)
+            - [select dynamic \<indexkey\>](#select-dynamic-indexkey)
+        * [delete \<command\>](#delete-command)
+            - [delete normal [keys]](#delete-normal-keys)
+            - [delete view \<design/view_name\> [keys]](#delete-view-designview_name-keys)
+            - [delete dynamic \<indexkey\> [keys]](#delete-dynamic-indexkey-keys)
 - [Notes](#notes)
 - [Contributions](#contributions)
 - [Contact](#contact)
@@ -42,7 +48,7 @@ For every commands you use, they are some global options that you need or can se
 
 ##Document's commands
 
-###select \<sub_command\>
+###select \<command\>
 
 To access the select commands, simply run: `pouch-cli select --help`.
 
@@ -57,7 +63,7 @@ At this level, you still have other global options.
 
 From this point, you have three possible subcommands to use.
 
-####normal
+####select normal
 The normal select let you query the database and select particulars documents base on their ids.
 
 For example, if we want to get the document with the _id *test_doc*, we would do the following: 
@@ -69,12 +75,10 @@ pouch-cli select normal -k test_doc -d "http://localhost:5984/db"
 You can also fetch multiple keys:  
 
 ```bash
-pouch-cli select normal -k ["test_doc","test_doc2"] -d "http://localhost:5984/db"
+pouch-cli select normal -k "test_doc" "test_doc2" -d "http://localhost:5984/db"
 ```
 
----
-
-####view \<design/view_name\>
+####select view \<design/view_name\>
 
 The view subcommand let you query the documents from one of your view. It's the same usage as for the normal command except that you must specify the viewname. Here's an example:
 
@@ -82,11 +86,7 @@ The view subcommand let you query the documents from one of your view. It's the 
 pouch-cli select view "design_doc/view_name" -d "http://localhost:5984/db"
 ```
 
-
-
----
-
-####dynamic \<indexkey\>
+####select dynamic \<indexkey\>
 
 The dynamic subcommand let you query more dynamic queries. This is only generating basic javascript queries for you. This is not an efficient way to query your database but this can be useful for quick operations. The index key defines on what field should the document be queried. For example, if you want to get the documents based on the name, the indexkey would be *name*. You can also make temporary queries by using the (-udd false) option(see note below). 
 
@@ -96,7 +96,58 @@ The dynamic subcommand let you query more dynamic queries. This is only generati
 pouch-cli select dynamic "name" -k "John" -d "http://localhost:5984/db"
 ```
 
+---
 
+###delete \<command\>
+
+The delete command is very similar to the select command. It let you query the documents but instead of returning the results, it deletes it. Here are listed the different global options available for this command :
+
+| Option |   Alias   | Type | Default |  Description |
+| ------ |   -----   | ---- | ------- | ----------- |
+| -k | --keys | Array|string | | Can be either an array of keys to fetch or a single key to fetch. |
+
+####delete normal [keys]
+
+This command is very simple. It is simply querying all the documents by the keys. If you do not specify any keys, all of the documents will be deleted.
+
+Command examples :
+
+```bash
+pouch-cli delete normal -d "http://localhost:5984/db"
+```
+
+For a specific key :
+
+```bash
+pouch-cli delete normal -d "http://localhost:5984/db" -k "specific_id"
+```
+
+For multiple keys : 
+
+```bash
+pouch-cli delete normal -d "http://localhost:5984/db" -k "first_id" "second_id"
+```
+
+####delete view \<design/view_name\> [keys]
+
+The view subcommand let you delete the documents from one of your view. It's the same usage as for the normal command except that you must specify the viewname. Here's an example:
+
+```bash
+pouch-cli delete view "design_doc/view_name" -d "http://localhost:5984/db"
+```
+
+####delete dynamic \<indexkey\> [keys]
+
+The dynamic subcommand let you delete document dynamically. This is only generating basic javascript queries for you. This is not an efficient way to query and delete documents from your database but this can be useful for quick operations. The index key defines on what field should the document be queried. For example, if you want to get the documents based on the name, the indexkey would be *name*. You can also make temporary queries by using the (-udd false) option(see note below). 
+
+*Note: Since CouchDB 2.0 release, the temporary views are disabled. Since PouchDB queries with temporary views are not working, you have to create a design document for your queries. Also, be aware that views are created based on the index key. For example, if you query by the name, you will have a view named "by_name".*
+
+```bash
+pouch-cli delete dynamic "name" -k "John" -d "http://localhost:5984/db"
+```
+
+
+---
 
 #Notes
 This package is **not stable yet**, so don't put it in a production environment. CLI parameters and functions might change. I will try to write a changelog if it happens.

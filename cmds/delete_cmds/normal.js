@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
-exports.command = 'normal [options]';
+exports.command = 'normal [keys]';
 exports.desc = 'Deletes the documents directly using their ids(keys).';
 exports.builder = {};
 exports.handler = function (argv) {
@@ -29,16 +29,14 @@ exports.handler = function (argv) {
         console.error(e);
         return process.exit(1);
     }
+    debugger;
     cmds.Query.all(argv.keys).then(function (rows) {
         rows = cmds.cleanRows(rows);
         return cmds.delete(rows);
     }).then(function (result) {
-        if (result && result.success)
-            console.log("Successfully deleted");
-        else
-            console.log("An error occured");
+       console.log("Successfully deleted");
     }).catch(function (err) {
-        console.error(err);
+        console.error(JSON.stringify(err));
         return process.exit(1);
     });
 };

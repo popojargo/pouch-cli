@@ -15,15 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
-exports.command = 'view <viewname> [options]';
+exports.command = 'view <viewname> [keys]';
 exports.desc = 'Delete the documents from a certain view';
 exports.builder = {
     viewname: {
         describe: 'The design document id with the viewname exlucding the _design/ prefix.'
-    },
-    keys: {
-        describe: 'The keys from the view to delete',
-        array: true
     }
 };
 exports.handler = function (argv) {
@@ -42,12 +38,9 @@ exports.handler = function (argv) {
         rows = cmds.cleanRows(rows);
         return cmds.delete(rows);
     }).then(function (result) {
-        if (result && result.success)
-            console.log("Successfully deleted");
-        else
-            console.log("An error occured");
+       console.log("Successfully deleted");
     }).catch(function (err) {
-        console.error(err);
+        console.error(JSON.stringify(err));
         return process.exit(1);
     });
 };
