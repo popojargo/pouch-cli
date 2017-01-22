@@ -1,4 +1,7 @@
 #pouch-cli
+
+[![npm version](https://badge.fury.io/js/pouch-cli.svg)](https://badge.fury.io/js/pouch-cli)
+
 Inspired from [pouchdb-dump-cli](https://www.npmjs.com/package/pouchdb-dump-cli). This module let you perform basic operations on Cloudant/CouchDB/PouchDB databases. The main mission of this module is to give quick commands to daily operations on your database. You can access it via the CLI or directly using the library. 
 
 This is currently under development so use it at your own risks.  
@@ -32,6 +35,8 @@ If you plan to use the CLI, I suggest that you install it globally like this: `n
 Once installed, you can use this command to access the CLI: `pouch-cli`.
 
 #Changelog
+
+[![Stories in Ready](https://badge.waffle.io/popojargo/pouch-cli.png?label=ready&title=Ready)](https://waffle.io/popojargo/pouch-cli)
 
 Coming soon.
 
