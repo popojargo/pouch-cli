@@ -33,11 +33,4 @@ var yargs = require('yargs')
     .alias('p', 'password')
     .describe('p', 'Password for the CouchDB database (if it\'s protected)')
     .global(['d', 'u', 'p'])
-    .example('$0 http://localhost:5984/mydb > dump.txt',
-        'Dump from the "mydb" CouchDB to dump.txt')
-    //  .example('$0 /path/to/mydb > dump.txt',
-    //    'Dump from the "mydb" LevelDB-based PouchDB to dump.txt')
-    .example('$0 http://localhost:5984/mydb -o dump.json',
-        'Dump to the specified file instead of stdout')
-    .example('$0 http://example.com/mydb -u myUsername -p myPassword > dump.txt',
-        'Specify a CouchDB username and password if it\'s protected').argv;
+    .argv;

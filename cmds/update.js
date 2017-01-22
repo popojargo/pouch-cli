@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-exports.command = 'update <command>';
+
+/*exports.command = 'update <command>';
 exports.desc = 'Updates or inserts documents into the database';
 exports.builder = function (yargs) {
     return yargs.commandDir('updates_cmds');
 };
 exports.handler = function (argv) {
-};
+};*/
