@@ -1,4 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/popojargo/pouch-cli.png?label=ready&title=Ready)](https://waffle.io/popojargo/pouch-cli)
 #pouch-cli
 
 Inspired from [pouchdb-dump-cli](https://www.npmjs.com/package/pouchdb-dump-cli). This module let you perform basic operations on Cloudant/CouchDB/PouchDB databases. The main mission of this module is to give quick commands to daily operations on your database. You can access it via the CLI or directly using the library. 
