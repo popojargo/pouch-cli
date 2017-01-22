@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
-exports.command = 'view <viewname> [keys]';
+exports.command = 'view <viewname> [options]';
 exports.desc = 'Delete the documents from a certain view';
 exports.builder = {
     viewname: {
@@ -30,17 +30,17 @@ exports.handler = function (argv) {
     /**
      * @type PouchCommands
      */
-    var pds;
+    var cmds;
     try {
-        pds = new PouchCommands(argv.d, argv.u, argv.p);
+        cmds = new PouchCommands(argv.d, argv.u, argv.p);
     } catch (e) {
         console.error(e);
         return process.exit(1);
     }
 
-    pds.Query.byView(argv.viewname, argv.keys).then(function (rows) {
-        rows = pds.cleanRows(rows);
-        return pds.delete(rows);
+    cmds.Query.byView(argv.viewname, argv.keys).then(function (rows) {
+        rows = cmds.cleanRows(rows);
+        return cmds.delete(rows);
     }).then(function (result) {
         if (result && result.success)
             console.log("Successfully deleted");

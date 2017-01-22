@@ -15,14 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
-exports.command = 'dynamic <indexkey> [keys]';
+exports.command = 'dynamic <indexkey> [optoins]';
 exports.desc = 'Deletes the documents from a indexkey and matching values(keys).';
 exports.builder = {
     indexkey: {
         describe: 'The index key that will be used to create the dynamic view.'
     },
-    d: {
+    udd: {
         alias: 'useDesignDoc',
+        default:true,
         describe: 'Determine if a design doc will be used for the request or if it will be temporary.'
     }, keys: {
         array: true,

@@ -16,23 +16,23 @@
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
 var utils = require("../../lib/utils.js");
-exports.command = 'normal';
+exports.command = 'normal [options]';
 exports.desc = 'Get the documents using directly with their key(id).';
 exports.builder = {};
 exports.handler = function (argv) {
 	/**
 	 * @type PouchCommands
 	 */
-	var pds;
+	var cmds;
 	try {
-		pds = new PouchCommands(argv.d, argv.u, argv.p);
+		cmds = new PouchCommands(argv.d, argv.u, argv.p);
 	} catch (e) {
 		console.error(e);
 		return process.exit(1);
 	}
-	pds.Query.all(argv.k).then(function (rows) {
+	cmds.Query.all(argv.k).then(function (rows) {
 		var opts = {withError: argv.e, withoutRev: argv.r};
-		rows = pds.cleanRows(rows, opts);
+		rows = cmds.cleanRows(rows, opts);
 
 		utils.writeContent(rows, argv.o);
 	}).catch(function (err) {

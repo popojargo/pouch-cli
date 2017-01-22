@@ -16,14 +16,15 @@
  */
 var PouchCommands = require("../../lib/pouchcmds.js");
 var utils = require("../../lib/utils.js");
-exports.command = 'dynamic <indexkey>';
+exports.command = 'dynamic <indexkey> [options]';
 exports.desc = 'Gets the documents from a indexkey and matching values(keys).';
 exports.builder = {
     indexkey: {
         describe: 'The index key that will be used to create the dynamic view.'
     },
-    useDesignDoc: {
+    udd: {
         alias: 'useDesignDoc',
+        default:true,
         describe: 'Determine if a design doc will be used for the request of if it will be temporary.'
     }
 };
@@ -31,17 +32,17 @@ exports.handler = function (argv) {
     /**
      * @type PouchCommands
      */
-    var pds;
+    var cmds;
     try {
-        pds = new PouchCommands(argv.d, argv.u, argv.p);
+        cmds = new PouchCommands(argv.d, argv.u, argv.p);
     } catch (e) {
         console.error(e);
         return process.exit(1);
     }
 
-    pds.Query.getByKeyValue(argv.indexkey, argv.k, argv.useDesignDoc).then(function (rows) {
+    cmds.Query.getByKeyValue(argv.indexkey, argv.k, argv.useDesignDoc).then(function (rows) {
         var opts = {withError: argv.e, withoutRev: argv.r};
-        rows = pds.cleanRows(rows, opts);
+        rows = cmds.cleanRows(rows, opts);
         utils.writeContent(rows, argv.o);
     }).catch(function (err) {
         console.error(err);
